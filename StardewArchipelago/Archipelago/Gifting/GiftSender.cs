@@ -8,13 +8,11 @@ using StardewValley;
 
 namespace StardewArchipelago.Archipelago.Gifting
 {
-    public class GiftSender
+    private class GiftInfo
     {
-        private readonly IMonitor _monitor;
-        private readonly ArchipelagoClient _archipelago;
-        private readonly IGiftingService _giftService;
-        internal GiftGenerator GiftGenerator { get; }
-        private List<GiftInfo> deliveryQueue = new List<GiftInfo>();
+        public _giftItem;
+        public _giftTraits;
+        public _slotName;
         
         public GiftInfo(var giftItem, var giftTraits, string slotName)
         {
@@ -22,6 +20,15 @@ namespace StardewArchipelago.Archipelago.Gifting
             _giftTraits = giftTraits;
             _slotName = slotName;
         }
+    }
+    
+    public class GiftSender
+    {
+        private readonly IMonitor _monitor;
+        private readonly ArchipelagoClient _archipelago;
+        private readonly IGiftingService _giftService;
+        internal GiftGenerator GiftGenerator { get; }
+        private List<GiftInfo> deliveryQueue = new List<GiftInfo>();
 
         public GiftSender(IMonitor monitor, ArchipelagoClient archipelago, StardewItemManager itemManager, IGiftingService giftService)
         {
