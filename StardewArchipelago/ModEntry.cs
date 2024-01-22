@@ -337,7 +337,9 @@ namespace StardewArchipelago
         private void OnDayEnding(object sender, DayEndingEventArgs e)
         {
             _giftHandler.ReceiveAllGiftsTomorrow();
-            _giftHandler.SendAllGiftsToday();
+            if (MultiSleep.DaysToSkip == 0) {
+                _giftHandler.SendAllGiftsToday();
+            }
             _villagerEvents.CheckJunaHearts(_archipelago);
             AdventurerGuildInjections.RemoveExtraItemsFromItemsLostLastDeath();
         }
