@@ -10,5 +10,6 @@ namespace StardewArchipelago.Archipelago.Gifting
         bool HandleGiftItemCommand(string message);
         void ReceiveAllGiftsTomorrow();
         void ExportAllGifts(string filePath);
+        void SendAllGiftsToday();
     }
 }
