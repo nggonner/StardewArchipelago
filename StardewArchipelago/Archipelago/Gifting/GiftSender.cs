@@ -19,15 +19,15 @@ namespace StardewArchipelago.Archipelago.Gifting
         private readonly ArchipelagoClient _archipelago;
         private readonly IGiftingService _giftService;
         internal GiftGenerator GiftGenerator { get; }
-		private List<GiftInfo> deliveryQueue = new List<GiftInfo>();
-		
-		public GiftInfo(var giftItem, var giftTraits, string slotName)
-		{
-			_giftItem = giftItem;
-			_giftTraits = giftTraits;
-			_slotName = slotName;
-		}
-		
+        private List<GiftInfo> deliveryQueue = new List<GiftInfo>();
+        
+        public GiftInfo(var giftItem, var giftTraits, string slotName)
+        {
+            _giftItem = giftItem;
+            _giftTraits = giftTraits;
+            _slotName = slotName;
+        }
+        
         public GiftSender(IMonitor monitor, ArchipelagoClient archipelago, StardewItemManager itemManager, IGiftingService giftService)
         {
             _monitor = monitor;
@@ -67,9 +67,9 @@ namespace StardewArchipelago.Archipelago.Gifting
                     GiveCantAffordTaxFeedbackToPlayer(itemValue, tax, taxRate);
                     return;
                 }
-				
-				deliveryQueue.Add(new GiftInfo(giftItem, giftTraits, slotName));
-				/*
+                
+                deliveryQueue.Add(new GiftInfo(giftItem, giftTraits, slotName));
+                /*
                 var success = _giftService.SendGift(giftItem, giftTraits, slotName, out var giftId);
                 _monitor.Log($"Sending {giftOrTrap} of {giftItem.Amount} {giftItem.Name} to {slotName} with {giftTraits.Length} traits. [ID: {giftId}]",
                     LogLevel.Info);
@@ -79,7 +79,7 @@ namespace StardewArchipelago.Archipelago.Gifting
                     Game1.chatBox?.addMessage($"Unknown Error occurred while sending {giftOrTrap}.", Color.Red);
                     return;
                 }
-				*/
+                */
                 Game1.player.ActiveObject = null;
                 Game1.player.Money -= tax;
                 GiveJojaPrimeInformationToPlayer(slotName, giftOrTrap, giftItem);
@@ -92,32 +92,32 @@ namespace StardewArchipelago.Archipelago.Gifting
                 return;
             }
         }
-		
-		public void SendAllGifts()
-		{	
-			foreach (var gift in deliveryQueue)
+        
+        public void SendAllGifts()
+        {   
+            foreach (var gift in deliveryQueue)
             {
-				try
-				{
-					var success = _giftService.SendGift(gift._giftItem, gift._giftTraits, gift._slotName, out var giftId);
-					_monitor.Log($"Sending {giftOrTrap} of {giftItem.Amount} {giftItem.Name} to {slotName} with {giftTraits.Length} traits. [ID: {giftId}]",
-						LogLevel.Info);
-					if (!success)
-					{
-						_monitor.Log($"Gift Failed to send properly", LogLevel.Error);
-						Game1.chatBox?.addMessage($"Unknown Error occurred while sending {giftOrTrap}.", Color.Red);
-						return;
-					}		
-				}
-				catch (Exception ex)
-				{
-					_monitor.Log($"Unknown error occurred while attempting to process gift command.{Environment.NewLine}Message: {ex.Message}{Environment.NewLine}StackTrace: {ex.StackTrace}", LogLevel.Error);
-					Game1.chatBox?.addMessage($"Could not complete gifting operation. Check SMAPI for error details.", Color.Red);
-					return;
-				}
-			}
-			deliveryQueue.Clear();
-		}
+                try
+                {
+                    var success = _giftService.SendGift(gift._giftItem, gift._giftTraits, gift._slotName, out var giftId);
+                    _monitor.Log($"Sending {giftOrTrap} of {giftItem.Amount} {giftItem.Name} to {slotName} with {giftTraits.Length} traits. [ID: {giftId}]",
+                        LogLevel.Info);
+                    if (!success)
+                    {
+                        _monitor.Log($"Gift Failed to send properly", LogLevel.Error);
+                        Game1.chatBox?.addMessage($"Unknown Error occurred while sending {giftOrTrap}.", Color.Red);
+                        return;
+                    }       
+                }
+                catch (Exception ex)
+                {
+                    _monitor.Log($"Unknown error occurred while attempting to process gift command.{Environment.NewLine}Message: {ex.Message}{Environment.NewLine}StackTrace: {ex.StackTrace}", LogLevel.Error);
+                    Game1.chatBox?.addMessage($"Could not complete gifting operation. Check SMAPI for error details.", Color.Red);
+                    return;
+                }
+            }
+            deliveryQueue.Clear();
+        }
 
         private int GetTaxForItem(Object giftObject)
         {

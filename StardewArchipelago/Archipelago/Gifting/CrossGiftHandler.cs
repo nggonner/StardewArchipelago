@@ -81,16 +81,16 @@ namespace StardewArchipelago.Archipelago.Gifting
             _giftSender.SendGift(receiverSlotName, isTrap);
             return true;
         }
-		
-		public void SendAllGiftsToday()
-		{
-			if (_archipelago == null || !_archipelago.SlotData.Gifting || !_archipelago.MakeSureConnected())
+        
+        public void SendAllGiftsToday()
+        {
+            if (_archipelago == null || !_archipelago.SlotData.Gifting || !_archipelago.MakeSureConnected())
             {
                 return;
             }
-			_giftSender.SendAllGifts();
-		}
-		
+            _giftSender.SendAllGifts();
+        }
+        
         public void ReceiveAllGiftsTomorrow()
         {
             if (_archipelago == null || !_archipelago.SlotData.Gifting || !_archipelago.MakeSureConnected())
