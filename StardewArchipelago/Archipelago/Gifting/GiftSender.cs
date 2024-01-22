@@ -1,24 +1,30 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
 using Archipelago.Gifting.Net.Service;
 using Microsoft.Xna.Framework;
 using StardewArchipelago.Stardew;
 using StardewModdingAPI;
 using StardewValley;
+using Microsoft.VisualBasic;
+using Archipelago.Gifting.Net.Gifts;
+using Archipelago.Gifting.Net.Traits;
 
 namespace StardewArchipelago.Archipelago.Gifting
 {
-    private class GiftInfo
+    public class GiftInfo
     {
-        public _giftItem;
-        public _giftTraits;
-        public _slotName;
+        public GiftItem _giftItem;
+        public GiftTrait[] _giftTraits;
+        public string _slotName;
+        public string _giftOrTrap;
         
-        public GiftInfo(var giftItem, var giftTraits, string slotName)
+        public GiftInfo(GiftItem giftItem, GiftTrait[] giftTraits, string slotName, string giftOrTrap)
         {
             _giftItem = giftItem;
             _giftTraits = giftTraits;
             _slotName = slotName;
+            _giftOrTrap = giftOrTrap;
         }
     }
     
@@ -77,7 +83,7 @@ namespace StardewArchipelago.Archipelago.Gifting
                 }
 
 
-                deliveryQueue.Add(new GiftInfo(giftItem, giftTraits, slotName));
+                deliveryQueue.Add(new GiftInfo(giftItem, giftTraits, slotName, giftOrTrap));
                 /*
                 var success = _giftService.SendGift(giftItem, giftTraits, slotName, out var giftId);
                 _monitor.Log(
@@ -113,12 +119,12 @@ namespace StardewArchipelago.Archipelago.Gifting
                 try
                 {
                     var success = _giftService.SendGift(gift._giftItem, gift._giftTraits, gift._slotName, out var giftId);
-                    _monitor.Log($"Sending {giftOrTrap} of {giftItem.Amount} {giftItem.Name} to {slotName} with {giftTraits.Length} traits. [ID: {giftId}]",
+                    _monitor.Log($"Sending {gift._giftOrTrap} of {gift._giftItem.Amount} {gift._giftItem.Name} to {gift._slotName} with {gift._giftTraits.Length} traits. [ID: {giftId}]",
                         LogLevel.Info);
                     if (!success)
                     {
                         _monitor.Log($"Gift Failed to send properly", LogLevel.Error);
-                        Game1.chatBox?.addMessage($"Unknown Error occurred while sending {giftOrTrap}.", Color.Red);
+                        Game1.chatBox?.addMessage($"Unknown Error occurred while sending {gift._giftOrTrap}.", Color.Red);
                         return;
                     }       
                 }
